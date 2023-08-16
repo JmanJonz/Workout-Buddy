@@ -1,6 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 
+// Import routers to use
+    import workoutRouter from "./routes/workouts.js";
+
 // Set up the dotenv module
 dotenv.config();
 
@@ -12,10 +15,10 @@ app.listen(3000, () => {
     console.log("Server listening on Localhost and port 3000." );
 });
 
-// // Start listening on port at my ip address and custom port...
-// app.listen(process.env.PORT, process.env.MYIPADDRESS, () => {
-//     console.log("Server listening at my ip address and custom port.");
-// });
+// Start listening on port at my ip address and custom port...
+app.listen(process.env.PORT, process.env.MYIPADDRESS, () => {
+    console.log("Server listening at my ip address and custom port.");
+});
 
 // Middleware loging requests before response 
 app.use((req, res, next)=>{ 
@@ -24,8 +27,7 @@ app.use((req, res, next)=>{
     next(); 
 });
 
-// Handle http requests routes...
-app.get("/", (req, res) => {
-    res.json({mssg: "Server Request & Response Processed!!!!!"})
-})
+// Connect Imported Routes To This Live Server:
+app.use("/api/workouts", workoutRouter);
+
 
