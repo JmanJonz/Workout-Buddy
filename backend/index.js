@@ -1,33 +1,47 @@
-import express from "express";
-import dotenv from "dotenv";
+// code imports
+    import express from "express";
+    import dotenv from "dotenv";
+    import mongoose from "mongoose";
+    // import routers to use
+        import workoutRouter from "./routes/workouts.js";
 
-// Import routers to use
-    import workoutRouter from "./routes/workouts.js";
 
-// Set up the dotenv module
-dotenv.config();
+// set up the dotenv module
+    dotenv.config();
 
-// Make express app.
-const app = express();
+// make express app.
+    const app = express();
 
-// Server listening on port 3000 and localhost
-app.listen(3000, () => {
-    console.log("Server listening on Localhost and port 3000." );
-});
+// connect to mongodb atlas database then start server
+    (async ()=>{
+        try{
+            // connect to mongodb using await
+                await mongoose.connect(process.env.MONGO_URI)
+            // server listening on localhost port 3000
+                app.listen(3000, () => {
+                console.log("Connected to DB Server listening at Localhost on port 3000.");
+                });
+            // start listening at my ip address and custom port...
+                app.listen(process.env.PORT, process.env.MYIPADDRESS, () => {
+                console.log("Connected to DB & listening on my ip address at my port.");
+                });
+        } catch (error){
+            console.error("Error connecting to MongoDB:", error);
+        }
+    })();
 
-// Start listening on port at my ip address and custom port...
-app.listen(process.env.PORT, process.env.MYIPADDRESS, () => {
-    console.log("Server listening at my ip address and custom port.");
-});
+// middleware (inbetween request and response)
+    // creating a copy / gaining access to the request body
+        app.use(express.json())
 
-// Middleware loging requests before response 
-app.use((req, res, next)=>{ 
-    console.log(req.path, req.method); 
-    // Run next method but in this case not moving on to any more middleware... 
-    next(); 
-});
+    // loging requests before response 
+        app.use((req, res, next)=>{ 
+            console.log(req.path, req.method); 
+            // Run next method but in this case not moving on to any more middleware... 
+                next(); 
+        });
 
-// Connect Imported Routes To This Live Server:
-app.use("/api/workouts", workoutRouter);
+// connect Imported Routes To This Live Server:
+    app.use("/api/workouts", workoutRouter);
 
 
