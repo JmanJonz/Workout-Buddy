@@ -1,10 +1,10 @@
 // code imports
-    import express from "express";
-    import dotenv from "dotenv";
-    import mongoose from "mongoose";
-    // import routers to use
-        import workoutRouter from "./routes/workouts.js";
-
+    // npm modules
+        import express from "express";
+        import dotenv from "dotenv";
+        import mongoose from "mongoose";
+    // routers to use
+        import workoutRouter from "./routes/workoutRouter.js";
 
 // set up the dotenv module
     dotenv.config();
@@ -21,10 +21,10 @@
                 app.listen(3000, () => {
                 console.log("Connected to DB Server listening at Localhost on port 3000.");
                 });
-            // start listening at my ip address and custom port...
-                app.listen(process.env.PORT, process.env.MYIPADDRESS, () => {
-                console.log("Connected to DB & listening on my ip address at my port.");
-                });
+            // // start listening at my ip address and custom port...
+            //     app.listen(process.env.PORT, process.env.MYIPADDRESS, () => {
+            //     console.log("Connected to DB & listening on my ip address at my port.");
+            //     });
         } catch (error){
             console.error("Error connecting to MongoDB:", error);
         }
@@ -33,6 +33,7 @@
 // middleware (inbetween request and response)
     // creating a copy / gaining access to the request body
         app.use(express.json())
+        console.log
 
     // loging requests before response 
         app.use((req, res, next)=>{ 
