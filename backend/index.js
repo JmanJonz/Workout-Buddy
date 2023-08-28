@@ -4,7 +4,7 @@
         import dotenv from "dotenv";
         import mongoose from "mongoose";
     // routers to use
-        import workoutRouter from "./routes/workoutRouter.js";
+        import workoutRouter from "./routers/workoutRouter.js";
 
 // set up the dotenv module
     dotenv.config();
