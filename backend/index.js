@@ -18,13 +18,9 @@
             // connect to mongodb using await
                 await mongoose.connect(process.env.MONGO_URI)
             // server listening on localhost port 3000
-                app.listen(3000, () => {
+                app.listen(process.env.PORT || 3000, () => {
                 console.log("Connected to DB Server listening at Localhost on port 3000.");
                 });
-            // // start listening at my ip address and custom port...
-            //     app.listen(process.env.PORT, process.env.MYIPADDRESS, () => {
-            //     console.log("Connected to DB & listening on my ip address at my port.");
-            //     });
         } catch (error){
             console.error("Error connecting to MongoDB:", error);
         }
